@@ -1,3 +1,4 @@
+from os import write
 import numpy as np
 from ADTs.adt import ListNode, MatrixNode
 
@@ -26,6 +27,15 @@ class Graph:
         while line := fp.readline():
             if line.strip()[0] != "c":
                 return map(lambda x: int(x), line.split(" "))
+
+    def write_file(self, path="data/output/"):
+        file_name = "di" if self.isDigraph else ""
+        file_name = file_name + "grafo"
+        file_name = file_name + "v" if self.graph_repr.isValued else file_name
+        file_name = file_name + "_n_m.dot" 
+        
+        with open(path+file_name, "w") as fp:
+            fp.write(str(self))
 
     class AdjMatrix:
         def __init__(self, V: int, isDigraph, lines: str):
