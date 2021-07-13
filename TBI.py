@@ -60,32 +60,18 @@ class Graph:
         def __get_formatted_graph(self):
             separator = " -> " if self.isDigraph else " -- "
             get_weigth_str = (lambda weight: f" [label = {weight}]") if self.isValued else lambda _: ""
-
-            def diagonal_run():
-                body = ""
-                matrix_dimension = len(self.graph_repr)
-                for row_idx in range(matrix_dimension):
-                    for col_idx in range(row_idx, matrix_dimension):
-                        if self.graph_repr[row_idx][col_idx].has_edge:
-                            _from = str(row_idx + 1)
-                            _to = str(col_idx + 1)
-                            weight = self.graph_repr[row_idx][col_idx].weight
-                            body = body + _from + separator + _to + get_weigth_str(weight) +";\n"
-                return body
-
-            def complete_run():
-                body = ""
-                matrix_dimension = len(self.graph_repr)
-                for row_idx in range(matrix_dimension):
-                    for col_idx in range(matrix_dimension):
-                        if self.graph_repr[row_idx][col_idx].has_edge:
-                            _from = str(row_idx + 1)
-                            _to = str(col_idx + 1)
-                            weight = self.graph_repr[row_idx][col_idx].weight
-                            body = body + _from + separator + _to + get_weigth_str(weight) +";\n"
-                return body
-
-            return complete_run() if self.isDigraph else diagonal_run()
+            get_col_range = lambda idx, matrix_dimension: range(0, matrix_dimension) if self.isDigraph else range(idx, matrix_dimension)
+            
+            body = ""
+            matrix_dimension = len(self.graph_repr)
+            for row_idx in range(matrix_dimension):
+                for col_idx in get_col_range(row_idx, matrix_dimension):
+                    if self.graph_repr[row_idx][col_idx].has_edge:
+                        _from = str(row_idx + 1)
+                        _to = str(col_idx + 1)
+                        weight = self.graph_repr[row_idx][col_idx].weight
+                        body = body + _from + separator + _to + get_weigth_str(weight) +";\n"
+            return body
 
     class AdjList:
         def __init__(self, V: int, isDigraph, lines: str):
