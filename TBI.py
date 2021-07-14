@@ -1,6 +1,10 @@
 from os import write
+import argparse
+
 import numpy as np
+
 from ADTs.adt import ListNode, MatrixNode
+
 
 
 class Graph:
@@ -132,6 +136,13 @@ class Graph:
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f', action='store', required=True)
+    parser.add_argument('-r', choices=['matrix', 'list'], action='store')
+    arg_dict = vars(parser.parse_args())
+    file_path, represent_as = arg_dict['f'], arg_dict['r']
+    
     my_graph = Graph()
-    my_graph.read_graph("data/grafo_n_m.txt")
-    breakpoint()
+    my_graph.read_graph(file_path)
+    my_graph.write_file()
+
