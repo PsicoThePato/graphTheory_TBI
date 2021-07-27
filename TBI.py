@@ -53,11 +53,9 @@ class Graph:
             for line in lines:
                 if line.strip()[0] == "c":
                     continue
-                row, column, weight = map(lambda x: int(x), line.strip().split(" "))
+                row, column = map(lambda x: int(x), line.strip().split(" "))
                 (adj_matrix[row - 1][column - 1]).has_edge = 1
-                (adj_matrix[row - 1][column - 1]).weight = weight
-                if weight != 0:
-                    self.isValued = True
+                (adj_matrix[row - 1][column - 1]).weight = 0
                 if not isDigraph:
                     pass
                     # self.__add_simetric_edge(adj_matrix, row, column, weight)
